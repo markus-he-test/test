@@ -1,0 +1,3150 @@
+{
+  "JSONSchema": {
+    "title": "Risk classification of AI systems",
+    "type": "object",
+    "definitions": {
+      "outputLow": {
+      "type": "string",
+      "title": "Result",
+      "default": "Based on your answers, no requirements from the AI Act apply."
+      },
+      "outputHigh": {
+      "type": "string",
+      "title": "Result",
+      "default": "Based on your answers, your application is a high-risk AI system according to the AI Act. Your AI system must comply with the requirements for high-risk AI systems. The extent of the requirements for your organization depends on your organization's role for this application. Determine in consultation with relevant legal experts whether your organization is a user or provider."
+      },
+      "outputForbidden": {
+      "type": "string",
+      "title": "Result",
+      "default": "Based on your answers, your application (partially) meets the definition of a prohibited AI system according to the AI Act. Since this is the highest risk category, which means the application should not be used, we cannot and do not want to determine this based on a questionnaire. Engage legal expertise to determine in consultation which category this case falls into."    
+      },
+      "outputHighExcept": {
+      "type": "string",
+      "title": "Result",
+      "default": "Based on your answers, your application is a high-risk AI system according to the AI Act, but there may also be an exception. Determine in consultation with relevant legal experts whether an exception actually applies. If there is no exception, your AI system must comply with the requirements for high-risk AI systems."
+      },
+      "outputForbiddenExcept": {
+      "type": "string",
+      "title": "Result",
+      "default": "Based on your answers, your application (partially) meets the definition of a prohibited AI system according to the AI Act, but there may also be an exception. Determine in consultation with relevant legal experts whether an exception actually applies. If not, determine in consultation which category this case falls into."    
+      },
+      "outputTransparency": {
+      "type": "string",
+      "title": "Result",
+      "default": "Based on your answers, specific transparency requirements apply according to the AI Act (Article 50). The application may also contain a 'General Purpose AI model' (GPAI). These models must comply with specific requirements for GPAI. Determine in consultation with relevant legal experts whether a GPAI model is involved and whether your organization is a user or provider."    
+      },
+      "outputTransparencyExcept": {
+      "type": "string",
+      "title": "Result",
+      "default": "Based on your answers, specific transparency requirements apply according to the AI Act (Article 50), but there may also be an exception. Determine in consultation with relevant legal experts whether an exception actually applies. If there is no exception, also check whether the application contains a 'General Purpose AI model' (GPAI) and whether your organization is a user or provider."    
+      },
+      "outputGPAI": {
+      "type": "string",
+      "title": "Result",
+      "default": "Based on your answers, your application is a so-called 'General Purpose AI model' (GPAI). These models must comply with specific requirements for GPAI. The requirements for your organization depend on your organization's role for this model. Determine in consultation with relevant legal experts whether a GPAI model is involved and whether your organization is a user or provider."    
+      },
+      "outputGPAIExcept": {
+      "type": "string",
+      "title": "Result",
+      "default": "Based on your answers, your application is a so-called 'General Purpose AI model' (GPAI), but there may also be an exception. Determine in consultation with relevant legal experts whether an exception actually applies. If there is no exception, specific requirements for GPAI apply."    
+      },
+      "biometrics": {
+      "title": "biometrics",
+      "type": "object",
+      "properties": {   
+        "5.e.1": {
+        "type": "string",
+        "title": "Is the application used to create or expand a facial recognition database?",
+        "enum": [
+          "Yes",
+          "No"
+        ]
+        }
+      },
+      "required": ["5.e.1"],
+      "dependencies": {  
+        "5.e.1": {
+        "oneOf": [
+          {
+          "properties": {
+            "5.e.1": {
+            "enum": [ "No" ]
+            },
+            "III.1.1": {
+            "type": "string",
+            "title": "What are biometric data used for?",
+            "enum": [
+              "For remote identification. Identification is about discovering who someone is from a group of people. For example, if you have a photo of a face, you can try to find out who that person is by comparing the photo with a database of faces. 'Remote' means that this identification takes place without the active involvement of the person being identified.",
+              "For categorizing (labeling) people. This means that people are grouped or assigned a label based on certain characteristics, such as how they look or behave. For example, if an application labels people as 'shoplifters' or makes an estimate of someone's gender based on video images.",
+              "To recognize or infer emotions or intentions. Emotions include happiness, joy, sadness, anger, aggression, surprise, disgust, shyness, excitement, shame, contempt, satisfaction, and pleasure.",
+              "For another purpose, such as crowd management where no individual persons are identified or classified with AI, or verification of a passport photo on location, with the cooperation of the person being identified."
+            ]
+            }
+          },
+          "required": ["III.1.1"]
+          },
+          {
+          "properties": {
+            "5.e.1": {
+            "enum": [ "Yes" ]
+            },
+            "5.e.2": {
+            "type": "string",
+            "title": "Is the application used for large-scale collection of facial images from the internet or security camera footage (scraping)?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["5.e.2"]
+          }
+        ]
+        },
+        "5.e.2": {
+        "oneOf": [
+          {
+          "properties": {
+            "5.e.2": {
+            "enum": [
+              "Yes"
+            ]
+            },
+            "exceptionForbidden": { "$ref": "#/definitions/exceptionForbidden" }
+          }
+          },
+          {
+          "properties": {
+            "5.e.2": {
+            "enum": ["No"]
+            },
+            "III.1.1": {
+            "type": "string",
+            "title": "What are biometric data used for?",
+            "enum": [
+              "For remote identification. Identification is about discovering who someone is from a group of people. For example, if you have a photo of a face, you can try to find out who that person is by comparing the photo with a database of faces. 'Remote' means that this identification takes place without the active involvement of the person being identified.",
+              "For categorizing (labeling) people. This means that people are grouped or assigned a label based on certain characteristics, such as how they look or behave. For example, if an application labels people as 'shoplifters' or makes an estimate of someone's gender based on video images.",
+              "To recognize or infer emotions or intentions. Emotions include happiness, joy, sadness, anger, aggression, surprise, disgust, shyness, excitement, shame, contempt, satisfaction, and pleasure.",
+              "For another purpose, such as crowd management where no individual persons are identified or classified with AI, or verification of a passport photo on location, with the cooperation of the person being identified."
+            ]
+            }
+          },
+          "required": ["III.1.1"]
+          }
+        ]
+        },
+        "III.1.1": {
+        "oneOf": [
+          {
+          "properties": {
+            "III.1.1": {
+            "enum": [
+              "For another purpose, such as crowd management where no individual persons are identified or classified with AI, or verification of a passport photo on location, with the cooperation of the person being identified."
+            ]
+            },
+            "III.1.1-yes4": {
+            "type": "string",
+            "title": "How are biometric data used? Provide a brief description of the process and how it affects citizens or officials.",
+            "default": ""
+            },
+            "infra": { "$ref": "#/definitions/infra" }
+          },
+          "required": ["III.1.1-yes4"]
+          },
+          {
+          "properties": {
+            "III.1.1": {
+            "enum": [
+              "For remote identification. Identification is about discovering who someone is from a group of people. For example, if you have a photo of a face, you can try to find out who that person is by comparing the photo with a database of faces. 'Remote' means that this identification takes place without the active involvement of the person being identified."
+            ]
+            },
+            "III.1.2": {
+            "type": "string",
+            "title": "Is the application only used to confirm that someone is who they say they are (verification/authentication)?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["III.1.2"]
+          },
+          {
+          "properties": {
+            "III.1.1": {
+            "enum": [
+              "To recognize or infer emotions or intentions. Emotions include happiness, joy, sadness, anger, aggression, surprise, disgust, shyness, excitement, shame, contempt, satisfaction, and pleasure."
+            ]
+            },
+            "5.f.1": {
+            "type": "string",
+            "title": "Is the application used in the workplace or in education?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["5.f.1"]
+          },
+          {
+          "properties": {
+            "III.1.1": {
+            "enum": [
+              "For categorizing (labeling) people. This means that people are grouped or assigned a label based on certain characteristics, such as how they look or behave. For example, if an application labels people as 'shoplifters' or makes an estimate of someone's gender based on video images."
+            ]
+            },
+            "5.g.1": {
+            "type": "string",
+            "title": "Is the application used to estimate someone's race, ethnicity or origin, political opinions, membership of a trade union, religious or philosophical beliefs, sex life or sexual orientation?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["5.g.1"]
+          }
+        ]
+        },
+        "III.1.2": {
+        "oneOf": [
+          {
+          "properties": {
+            "III.1.2": {
+            "enum": [
+              "Yes"
+            ]
+            },
+            "infra": { "$ref": "#/definitions/infra" }
+          }
+          },
+          {
+          "properties": {
+            "III.1.2": {
+            "enum": ["No"]
+            },
+            "5.h.1": {
+            "type": "string",
+            "title": "Is the application used for public safety, preventing, investigating or prosecuting criminal offenses, or executing sentences (community service or imprisonment)?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["5.h.1"]
+          }
+        ]
+        },
+        "5.h.1": {
+        "oneOf": [
+          {
+          "properties": {
+            "5.h.1": {
+            "enum": [
+              "Yes"
+            ]
+            },
+            "exceptionForbidden": { "$ref": "#/definitions/exceptionForbidden" }
+          }
+            },
+              {
+              "properties": {
+                "5.h.1": {
+                "enum": ["No"]
+                },
+                "III.1.3": {
+                "type": "string",
+                "title": "Is the application only used to support cybersecurity and data protection?",
+                "enum": [
+                  "Yes, this is the only purpose",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.1.3"]
+              }
+            ]
+            },
+            "5.g.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "5.g.1": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "exceptionForbidden": { "$ref": "#/definitions/exceptionForbidden" }
+              }
+              },
+              {
+              "properties": {
+                "5.g.1": {
+                "enum": ["No"]
+                },
+                "III.1.3": {
+                "type": "string",
+                "title": "Is the application only used to support cybersecurity and data protection?",
+                "enum": [
+                  "Yes, this is the only purpose",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.1.3"]
+              }
+            ]
+            },
+            "5.f.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "5.f.1": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "exceptionForbidden": { "$ref": "#/definitions/exceptionForbidden" }
+              }
+              },
+              {
+              "properties": {
+                "5.f.1": {
+                "enum": ["No"]
+                },
+                "III.1.3": {
+                "type": "string",
+                "title": "Is the application only used to support cybersecurity and data protection?",
+                "enum": [
+                  "Yes, this is the only purpose",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.1.3"]
+              }
+            ]
+            },
+            "III.1.3": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.1.3": {
+                "enum": [
+                  "Yes, this is the only purpose"
+                ]
+                },
+                "infra": { "$ref": "#/definitions/infra" }
+              }
+              },
+              {
+              "properties": {
+                "III.1.3": {
+                "enum": ["No"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            }
+          }  
+          },
+          "infra": {
+          "title": "infra",
+          "type": "object",
+          "properties": {
+            "III.2.1": {
+            "type": "string",
+            "title": "Is the application used within infrastructure or processes for the supply of gas, water, heating, or electricity?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["III.2.1"],
+          "dependencies": {
+            "III.2.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.2.1": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "III.2.4": {
+                "type": "string",
+                "title": "Does the application fulfill a safety function within the management or operation of this infrastructure?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.2.4"]
+              },
+              {
+              "properties": {
+                "III.2.1": {
+                "enum": ["No"]
+                },
+                "III.2.2": {
+                "type": "string",
+                "title": "Is the application used for the management or operation of roads, bridges, or road traffic?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.2.2"]
+              }
+            ]
+            },
+            "III.2.2": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.2.2": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "III.2.4": {
+                "type": "string",
+                "title": "Does the application fulfill a safety function within the management or operation of this infrastructure?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.2.4"]
+              },
+              {
+              "properties": {
+                "III.2.2": {
+                "enum": ["No"]
+                },
+                "III.2.3": {
+                "type": "string",
+                "title": "Is the application used within critical digital infrastructure?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.2.3"]
+              }
+            ]
+            },
+            "III.2.3": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.2.3": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "III.2.4": {
+                "type": "string",
+                "title": "Does the application fulfill a safety function within the management or operation of this infrastructure?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.2.4"]
+              },
+              {
+              "properties": {
+                "III.2.3": {
+                "enum": ["No"]
+                },
+                "education": { "$ref": "#/definitions/education" }
+              }
+              }
+            ]
+            },
+            "III.2.4": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.2.4": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "III.2.5": {
+                "type": "string",
+                "title": "Is the application a cybersecurity system?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.2.5"]
+              },
+              {
+              "properties": {
+                "III.2.4": {
+                "enum": ["No"]
+                },
+                "education": { "$ref": "#/definitions/education" }
+              }
+              }
+            ]
+            },
+            "III.2.5": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.2.5": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              },
+              {
+              "properties": {
+                "III.2.5": {
+                "enum": ["Yes"]
+                },
+                "education": { "$ref": "#/definitions/education" }
+              }
+              }
+            ]
+            }
+          }
+          },
+          "education": {
+          "title": "education",
+          "type": "object",
+          "properties": {  
+            "III.3": {
+            "type": "string",
+            "title": "Is the application used in the domain of education and (vocational) training?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["III.3"],
+          "dependencies": {
+            "III.3": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.3": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "III.3.1": {
+                "type": "string",
+                "title": "Is the application used for the allocation or admission of individuals to education, training, or schooling?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.3.1"]
+              },
+              {
+              "properties": {
+                "III.3": {
+                "enum": ["No"]
+                },
+                "work": { "$ref": "#/definitions/work" }
+              }
+              }
+            ]
+            },
+            "III.3.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.3.1": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "III.3.2": {
+                "type": "string",
+                "title": "Is the application used in assessing the level of education that someone will receive or have access to?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.3.2"]
+              },
+              {
+              "properties": {
+                "III.3.1": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            },
+            "III.3.2": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.3.2": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "III.3.3": {
+                "type": "string",
+                "title": "Is the application used for evaluating learning outcomes or for guiding the learning process (personalized learning)?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.3.3"]
+              },
+              {
+              "properties": {
+                "III.3.2": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            },
+            "III.3.3": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.3.3": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "III.3.4": {
+                "type": "string",
+                "title": "Is the application used for monitoring and detecting unauthorized behavior of pupils, students, or trainees?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.3.4"]
+              },
+              {
+              "properties": {
+                "III.3.3": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            },
+            "III.3.4": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.3.4": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "work": { "$ref": "#/definitions/work" }
+              }
+              },
+              {
+              "properties": {
+                "III.3.4": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            }
+          }  
+          },
+          "work": {
+          "title": "work",
+          "type": "object",
+          "properties": {  
+            "III.4": {
+            "type": "string",
+            "title": "Is the application applied to employees (including freelancers, external staff, interns, volunteers, etc.), applicants, or job seekers?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["III.4"],
+          "dependencies": { 
+            "III.4": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.4": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "III.4.1": {
+                "type": "string",
+                "title": "Is the application used in the field of recruitment and selection?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.4.1"]
+              },
+              {
+              "properties": {
+                "III.4": {
+                "enum": ["No"]
+                },
+                "essentialservices1": { "$ref": "#/definitions/essentialservices1" }
+              }
+              }
+            ]
+            },
+            "III.4.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.4.1": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "III.4.2": {
+                "type": "string",
+                "title": "Is the application used for placing targeted job advertisements?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.4.2"]
+              },
+              {
+              "properties": {
+                "III.4.1": {
+                "enum": ["No"]
+                },
+                "work2": { "$ref": "#/definitions/work2" }
+              }
+              }
+            ]
+            },
+            "III.4.2": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.4.2": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "III.4.3": {
+                "type": "string",
+                "title": "Is the application used for analyzing or filtering applications?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.4.3"]
+              },
+              {
+              "properties": {
+                "III.4.2": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            },
+            "III.4.3": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.4.3": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "III.4.4": {
+                "type": "string",
+                "title": "Is the application used in assessing candidates?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.4.4"]
+              },
+              {
+              "properties": {
+                "III.4.3": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            },
+            "III.4.4": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.4.4": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "work2": { "$ref": "#/definitions/work2" }
+              }
+              },
+              {
+              "properties": {
+                "III.4.4": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            }
+          }  
+          },
+          "work2": {
+          "title": "work2",
+          "type": "object",
+          "properties": {  
+            "III.4.5": {
+            "type": "string",
+            "title": "Is the application used for decisions regarding (changed) contractual terms, or for selection or assessment regarding promotions or changed positions?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["III.4.5"],
+          "dependencies": {  
+            "III.4.5": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.4.5": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "III.4.6": {
+                "type": "string",
+                "title": "Is the application used in the area of employee outflow?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.4.6"]
+              },
+              {
+              "properties": {
+                "III.4.5": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            },
+            "III.4.6": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.4.6": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "III.4.7": {
+                "type": "string",
+                "title": "Is the application used in processes where the distribution of tasks is determined?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.4.7"]
+              },
+              {
+              "properties": {
+                "III.4.6": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            },
+            "III.4.7": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.4.7": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "III.4.8": {
+                "type": "string",
+                "title": "Is the application used in processes where activities, behavior, or performance of employees are processed?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.4.8"]
+              },
+              {
+              "properties": {
+                "III.4.7": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            },
+            "III.4.8": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.4.8": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "III.4.9": {
+                "type": "string",
+                "title": "Is there evaluation or monitoring of behavior or performance in this process, or in related processes?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.4.9"]
+              },
+              {
+              "properties": {
+                "III.4.8": {
+                "enum": ["No"]
+                },
+                "essentialservices1": { "$ref": "#/definitions/essentialservices1" }
+              }
+              }
+            ]
+            },
+            "III.4.9": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.4.9": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              },
+              "required": ["III.4.9"]
+              },
+              {
+              "properties": {
+                "III.4.9": {
+                "enum": ["No"]
+                },
+                "essentialservices1": { "$ref": "#/definitions/essentialservices1" }
+              }
+              }
+            ]
+            }
+          }  
+          },
+      "essentialservices1": {
+        "title": "essentialservices1",
+        "type": "object",
+        "properties": {  
+          "III.5.1": {
+        "type": "string",
+        "title": "Is the application used by or on behalf of a government agency?",
+        "enum": [
+          "Yes",
+          "No"
+        ]
+          }
+        },
+        "required": ["III.5.1"],
+        "dependencies": {  
+          "III.5.1": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.5.1": {
+            "enum": [
+              "Yes"
+            ]
+          },
+          "III.5.2": {
+            "type": "string",
+            "title": "Is the application used in processes for benefits, allowances, (special) assistance, or other financial provisions?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.5.2"]
+          },
+          {
+            "properties": {
+          "III.5.1": {
+            "enum": ["No"]
+          },
+          "essentialservices2": { "$ref": "#/definitions/essentialservices2" }
+            }
+          }
+        ]
+          },
+          "III.5.2": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.5.2": {
+            "enum": [
+              "No"
+            ]
+          },
+          "III.5.3": {
+            "type": "string",
+            "title": "Is the application used in processes for (social) services or provisions, such as debt counseling, reintegration services, shelters, care, assistance, or provisions for disability or old age?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.5.3"]
+          },
+          {
+            "properties": {
+          "III.5.2": {
+            "enum": ["Yes"]
+          },
+          "III.5.4": {
+            "type": "string",
+            "title": "Is the application used in a process to assess whether someone is eligible for a service, provision, or benefit?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.5.4"]
+          }
+        ]
+          },
+          "III.5.3": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.5.3": {
+            "enum": [
+              "No"
+            ]
+          },
+          "essentialservices2": { "$ref": "#/definitions/essentialservices2" }
+            }
+          },
+          {
+            "properties": {
+          "III.5.3": {
+            "enum": ["Yes"]
+          },
+          "III.5.4": {
+            "type": "string",
+            "title": "Is the application used in a process to assess whether someone is eligible for a service, provision, or benefit?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.5.4"]
+          }
+        ]
+          },
+          "III.5.4": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.5.4": {
+            "enum": [
+              "No"
+            ]
+          },
+          "III.5.5": {
+            "type": "string",
+            "title": "Is the application used to decide whether a service, provision, or benefit is granted, denied, limited, withdrawn, or reclaimed?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.5.5"]
+          },
+          {
+            "properties": {
+          "III.5.4": {
+            "enum": ["Yes"]
+          },
+          "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+            }
+          }
+        ]
+          },
+          "III.5.5": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.5.5": {
+            "enum": [
+              "No"
+            ]
+          },
+          "essentialservices2": { "$ref": "#/definitions/essentialservices2" }
+            }
+          },
+          {
+            "properties": {
+          "III.5.5": {
+            "enum": ["Yes"]
+          },
+          "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+            }
+          }
+        ]
+          }
+        }  
+      },
+      "essentialservices2": {
+        "title": "essentialservices2",
+        "type": "object",
+        "properties": {  
+          "III.5.6": {
+        "type": "string",
+        "title": "Is the application used to assess the creditworthiness of individuals or to determine a credit score for individuals?",
+        "enum": [
+          "Yes",
+          "No"
+        ]
+          }
+        },
+        "required": ["III.5.6"],
+        "dependencies": {  
+          "III.5.6": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.5.6": {
+            "enum": [
+              "No"
+            ]
+          },
+          "III.5.7": {
+            "type": "string",
+            "title": "Is the application used for risk assessment and pricing for life and health insurance?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.5.7"]
+          },
+          {
+            "properties": {
+          "III.5.6": {
+            "enum": ["Yes"]
+          },
+          "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+            }
+          }
+        ]
+          },
+          "III.5.7": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.5.7": {
+            "enum": [
+              "No"
+            ]
+          },
+          "III.5.8": {
+            "type": "string",
+            "title": "Is the application used in evaluating emergency calls, making decisions about the deployment or prioritization of emergency services, or for the triage of urgent medical care?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.5.8"]
+          },
+          {
+            "properties": {
+          "III.5.7": {
+            "enum": ["Yes"]
+          },
+          "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+            }
+          }
+        ]
+          },
+          "III.5.8": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.5.8": {
+            "enum": [
+              "No"
+            ]
+          },
+          "lawEnforcement": { "$ref": "#/definitions/lawEnforcement" }
+            }
+          },
+          {
+            "properties": {
+          "III.5.8": {
+            "enum": ["Yes"]
+          },
+          "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+            }
+          }
+        ]
+          }
+        }  
+      },
+      "lawEnforcement": {
+        "title": "lawEnforcement",
+        "type": "object",
+        "properties": {  
+          "III.6-5.d": {
+        "type": "string",
+        "title": "Is the application used in assessing the risk that someone will (re)commit a criminal offense?",
+        "enum": [
+          "Yes",
+          "No"
+        ]
+          }
+        },
+        "required": ["III.6-5.d"],
+        "dependencies": {
+          "III.6-5.d": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.6-5.d": {
+            "enum": [
+              "Yes"
+            ]
+          },
+          "exceptionForbidden": { "$ref": "#/definitions/exceptionForbidden" }
+            }
+          },
+          {
+            "properties": {
+          "III.6-5.d": {
+            "enum": ["No"]
+          },
+          "III.6a": {
+            "type": "string",
+            "title": "Is the application used by police, special enforcement officers, inspection services, prisons, probation services, or other law enforcement agencies?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.6a"]
+          }
+        ]
+          },
+          "III.6a": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.6a": {
+            "enum": [
+              "No"
+            ]
+          },
+          "III.6b": {
+            "type": "string",
+            "title": "Is the application used by other services, departments, or organizations responsible for prevention, public safety protection, investigation, and prosecution of criminal offenses?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.6b"]
+          },
+          {
+            "properties": {
+          "III.6a": {
+            "enum": ["Yes"]
+          },
+          "III.6.1": {
+            "type": "string",
+            "title": "Is the application used to assess or estimate that someone will become a victim of criminal offenses?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.6.1"]
+          }
+        ]
+          },
+          "III.6b": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.6b": {
+            "enum": [
+              "No"
+            ]
+          },
+          "migration": { "$ref": "#/definitions/migration" }
+            }
+          },
+          {
+            "properties": {
+          "III.6b": {
+            "enum": ["Yes"]
+          },
+          "III.6b-yes": {
+            "type": "string",
+            "title": "Which organization and department or service is primarily responsible for the application?",
+            "default": ""
+          },
+          "III.6.1": {
+            "type": "string",
+            "title": "Is the application used to assess or estimate that someone will become a victim of criminal offenses?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.6.1"]
+          }
+        ]
+          },
+          "III.6.1": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.6.1": {
+            "enum": [
+              "No"
+            ]
+          },
+          "III.6.2": {
+            "type": "string",
+            "title": "Is the application used as a polygraph (lie detector) or similar instrument?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.6.2"]
+          },
+          {
+            "properties": {
+          "III.6.1": {
+            "enum": ["Yes"]
+          },
+          "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+            }
+          }
+        ]
+          },
+          "III.6.2": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.6.2": {
+            "enum": [
+              "No"
+            ]
+          },
+          "III.6.3": {
+            "type": "string",
+            "title": "Is the application used to assess the reliability of evidence during the investigation or prosecution of criminal offenses?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.6.3"]
+          },
+          {
+            "properties": {
+          "III.6.2": {
+            "enum": ["Yes"]
+          },
+          "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+            }
+          }
+        ]
+          },
+          "III.6.3": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.6.3": {
+            "enum": [
+              "No"
+            ]
+          },
+          "III.6.4": {
+            "type": "string",
+            "title": "Is the application used to automatically evaluate or predict characteristics, behavior, or personal aspects within the detection, investigation, or prosecution of criminal offenses?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.6.4"]
+          },
+          {
+            "properties": {
+          "III.6.3": {
+            "enum": ["Yes"]
+          },
+          "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+            }
+          }
+        ]
+          },
+          "III.6.4": {
+        "oneOf": [
+          {
+            "properties": {
+          "III.6.4": {
+            "enum": [
+              "No"
+            ]
+          },
+          "III.6.5": {
+            "type": "string",
+            "title": "Is the application used to assess personality traits and characteristics or previous criminal behavior of individuals or groups?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+          }
+            },
+            "required": ["III.6.5"]
+            },
+              {
+              "properties": {
+                "III.6.4": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            },
+            "III.6.5": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.6.5": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "migration": { "$ref": "#/definitions/migration" }
+              }
+              },
+              {
+              "properties": {
+                "III.6.5": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            }
+          }
+          },
+          "migration": {
+          "title": "migration",
+          "type": "object",
+          "properties": {  
+            "III.7": {
+            "type": "string",
+            "title": "Is the application used within migration, asylum, and border control management?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["III.7"],
+          "dependencies": {
+            "III.7": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.7": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "III.7.1": {
+                "type": "string",
+                "title": "Is the application used as a polygraph (lie detector) or similar instrument?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.7.1"]
+              },
+              {
+              "properties": {
+                "III.7": {
+                "enum": ["No"]
+                },
+                "justice": { "$ref": "#/definitions/justice" }
+              }
+              }
+            ]
+            },
+            "III.7.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.7.1": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "III.7.2": {
+                "type": "string",
+                "title": "Is the application used in the assessment of risks for a person entering territory of a member state of the European Union?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.7.2"]
+              },
+              {
+              "properties": {
+                "III.7.1": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            },
+            "III.7.2": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.7.2": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "III.7.3": {
+                "type": "string",
+                "title": "Is the application used in the processing of asylum, visa, or residence permit applications, and in handling complaints related to the eligibility of the applicant?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.7.3"]
+              },
+              {
+              "properties": {
+                "III.7.2": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            },
+            "III.7.3": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.7.3": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "III.7.4": {
+                "type": "string",
+                "title": "Is the application used for the detection, recognition, or identification of individuals?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.7.4"]
+              },
+              {
+              "properties": {
+                "III.7.3": {
+                "enum": ["Yes"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            },
+            "III.7.4": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.7.4": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "III.7.5": {
+                "type": "string",
+                "title": "Is the application solely used for the verification of a passport or other travel document to confirm that a specific person is who they claim to be?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.7.5"]
+              },
+              {
+              "properties": {
+                "III.7.4": {
+                "enum": ["No"]
+                },
+                "justice": { "$ref": "#/definitions/justice" }
+              }
+              }
+            ]
+            },
+            "III.7.5": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.7.5": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "justice": { "$ref": "#/definitions/justice" }
+              }
+              },
+              {
+              "properties": {
+                "III.7.5": {
+                "enum": ["No"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            }
+          }
+          },
+          "justice": {
+          "title": "justice",
+          "type": "object",
+          "properties": {  
+            "III.8.1": {
+            "type": "string",
+            "title": "Is the application used within the judiciary or alternative dispute resolution?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["III.8.1"],
+          "dependencies": {
+            "III.8.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.8.1": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "III.8.2": {
+                "type": "string",
+                "title": "Is the application used for supporting administrative activities that do not affect the judiciary in individual cases?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.8.2"]
+              },
+              {
+              "properties": {
+                "III.8.1": {
+                "enum": ["No"]
+                },
+                "III.8.3": {
+                "type": "string",
+                "title": "Is the application used within processes for elections or referenda?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.8.3"]
+              }
+            ]
+            },
+            "III.8.2": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.8.2": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "III.8.3": {
+                "type": "string",
+                "title": "Is the application used within processes for elections or referenda?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.8.3"]
+              },
+              {
+              "properties": {
+                "III.8.2": {
+                "enum": ["No"]
+                },
+                "exceptionHigh": { "$ref": "#/definitions/exceptionHigh" }
+              }
+              }
+            ]
+            },
+            "III.8.3": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.8.3": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "III.8.4": {
+                "type": "string",
+                "title": "Is the application used in a way that can influence the outcome or voting behavior of people in elections or referenda?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["III.8.4"]
+              },
+              {
+              "properties": {
+                "III.8.3": {
+                "enum": ["No"]
+                },
+                "art5": { "$ref": "#/definitions/art5" }
+              }
+              }
+            ]
+            },
+            "III.8.4": {
+            "oneOf": [
+              {
+              "properties": {
+                "III.8.4": {
+                "enum": [ "Yes" ]
+                },
+                "exceptionHigh":{ "$ref": "#/definitions/exceptionHigh" }
+              },
+              "required": ["III.8.4"]
+              },
+              {
+              "properties": {
+                "III.8.4": {
+                "enum": ["No"]
+                },
+                "art5": { "$ref": "#/definitions/art5" }
+              }
+              }
+            ]
+            }
+          }
+          },
+          "art5": {
+          "title": "art5",
+          "type": "object",
+          "properties": {  
+            "5.a.1": {
+            "type": "string",
+            "title": "Does the application use audio, image, or video techniques that people cannot consciously perceive?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["5.a.1"],
+          "dependencies": {
+            "5.a.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "5.a.1": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "5.a.2": {
+                "type": "string",
+                "title": "Is the application intended to influence the behavior or choices of people, to make them take actions or decisions they would not take without the application?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["5.a.2"]
+              },
+              {
+              "properties": {
+                "5.a.1": {
+                "enum": ["Yes"]
+                },
+                "5.a.4": {
+                "type": "string",
+                "title": "Can the application potentially have negative consequences for the user or other people?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["5.a.4"]
+              }
+            ]
+            },
+            "5.a.2": {
+            "oneOf": [
+              {
+              "properties": {
+                "5.a.2": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "5.a.4": {
+                "type": "string",
+                "title": "Can the application potentially have negative consequences for the user or other people?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["5.a.4"]
+              },
+              {
+              "properties": {
+                "5.a.2": {
+                "enum": ["No"]
+                },
+                "5.a.3": {
+                "type": "string",
+                "title": "Is it possible that the application unintentionally influences the behavior or choices of people, making them take actions or decisions they would not take without the application?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["5.a.3"]
+              }
+            ]
+            },
+            "5.a.3": {
+            "oneOf": [
+              {
+              "properties": {
+                "5.a.3": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "5.a.4": {
+                "type": "string",
+                "title": "Can the application potentially have negative consequences for the user or other people?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["5.a.4"]
+              },
+              {
+              "properties": {
+                "5.a.3": {
+                "enum": ["No"]
+                },
+                "5.c.1": {
+                "type": "string",
+                "title": "Is the application used to evaluate people, calculate scores, or classify individuals into groups?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["5.c.1"]
+              }
+            ]
+            },
+            "5.a.4": {
+            "oneOf": [
+              {
+              "properties": {
+                "5.a.4": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "exceptionForbidden": { "$ref": "#/definitions/exceptionForbidden" }
+              }
+              },
+              {
+              "properties": {
+                "5.a.4": {
+                "enum": ["No"]
+                },
+                "5.c.1": {
+                "type": "string",
+                "title": "Is the application used to evaluate people, calculate scores, or classify individuals into groups?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["5.c.1"]
+              }
+            ]
+            },
+            "5.c.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "5.c.1": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "other": { "$ref": "#/definitions/other" }
+              }
+              },
+              {
+              "properties": {
+                "5.c.1": {
+                "enum": ["Yes"]
+                },
+                "5.c.2": {
+                "type": "string",
+                "title": "Is this evaluation or estimation based on social behavior or (estimated) personal characteristics?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["5.c.2"]
+              }
+            ]
+            },
+            "5.c.2": {
+            "oneOf": [
+              {
+              "properties": {
+                "5.c.2": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "other": { "$ref": "#/definitions/other" }
+              }
+              },
+              {
+              "properties": {
+                "5.c.2": {
+                "enum": ["Yes"]
+                },
+                "5.c.3": {
+                "type": "string",
+                "title": "Can the evaluation or estimation lead to unfavourable treatment for the evaluated person?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["5.c.3"]
+              }
+            ]
+            },
+            "5.c.3": {
+            "oneOf": [
+              {
+              "properties": {
+                "5.c.3": {
+                "enum": [
+                  "No"
+                ]
+                },
+                "other": { "$ref": "#/definitions/other" }
+              }
+              },
+              {
+              "properties": {
+                "5.c.3": {
+                "enum": ["Yes"]
+                },
+                "5.c.4": {
+                "type": "string",
+                "title": "Does it occur that the unfavourable treatment takes place in a completely different context than the behavior or personal characteristic on which the score is based?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["5.c.4"]
+              }
+            ]
+            },
+            "5.c.4": {
+            "oneOf": [
+              {
+              "properties": {
+                "5.c.4": {
+                "enum": [
+                  "Yes"
+                ]
+                },
+                "exceptionForbidden": { "$ref": "#/definitions/exceptionForbidden" }
+              }
+              },
+              {
+              "properties": {
+                "5.c.4": {
+                "enum": ["No"]
+                },
+                "5.c.5": {
+                "type": "string",
+                "title": "Can it occur that the unfavourable treatment is not proportional to the exhibited behavior?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["5.c.5"]
+              }
+            ]
+            },
+            "5.c.5": {
+            "oneOf": [
+              {
+              "properties": {
+                "5.c.5": {
+                "enum": [ "Yes" ]
+                },
+                "exceptionForbidden": { "$ref": "#/definitions/exceptionForbidden" }
+              }
+              },
+              {
+              "properties": {
+                "5.c.5": {
+                "enum": ["No"]
+                },
+                "other": { "$ref": "#/definitions/other" }
+              }
+              }
+            ]
+            }
+          }
+          },
+          "exceptionHigh": {
+          "title": "exceptionHigh",
+          "type": "object",
+          "properties": {  
+            "2.6": {
+            "type": "string",
+            "title": "Is this application only used for scientific research and scientific development?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["2.6"],
+          "dependencies": {
+            "2.6": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.6": {
+                "enum": [ "Yes" ]
+                },
+                "2.6-yes": {
+                "type": "string",
+                "title": "Provide a brief description of the research. Include in this description at least the purpose of the research, the department within which this research is conducted, and the involved research institutes and/or other partners.",
+                "default": ""
+                },
+                "output": { "$ref": "#/definitions/outputHighExcept" }
+              },
+              "required": ["2.6-yes"]
+              },
+              {
+              "properties": {
+                "2.6": {
+                "enum": ["No"]
+                },
+                "2.3.1": {
+                "type": "string",
+                "title": "Is the application only used for defense or military purposes?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["2.3.1"]
+              }
+            ]
+            },
+            "2.3.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.3.1": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/outputHighExcept" }
+              }
+              },
+              {
+              "properties": {
+                "2.3.1": {
+                "enum": ["No"]
+                },
+                "2.3.2": {
+                "type": "string",
+                "title": "Is the application only used for national security purposes?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["2.3.2"]
+              }
+            ]
+            },
+            "2.3.2": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.3.2": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/outputHighExcept" }
+              }
+              },
+              {
+              "properties": {
+                "2.3.2": {
+                "enum": ["No"]
+                },
+                "2.10": {
+                "type": "string",
+                "title": "Is the application only used for personal non-professional activities?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["2.10"]
+              }
+            ]
+            },
+            "2.10": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.10": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/outputHighExcept" }
+              }
+              },
+              {
+              "properties": {
+                "2.10": {
+                "enum": ["No"]
+                },
+                "6.1": {
+                "type": "string",
+                "title": "Is the application used to automatically evaluate or predict characteristics, behavior, or personal aspects?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              }
+              }
+            ]
+            },
+            "6.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "6.1": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/outputHigh" }
+              }
+              },
+              {
+              "properties": {
+                "6.1": {
+                "enum": ["No"]
+                },
+                "6.2": {
+                "type": "string",
+                "title": "Is the application only used for limited procedural tasks or preparatory tasks without influencing the outcomes of a (decision-making) process?",
+                "enum": [
+                  "Yes, the application is used for a limited procedural task. Think of an AI system that converts unstructured data into structured data, an AI system that classifies incoming documents into categories, or an AI system used to detect duplicates within a large number of applications.",
+                  "Yes, the application is used to improve the result of a previously human-performed activity. Think of an AI system that improves the language of previously drafted documents, for example, regarding professional tone or academic style, or by tailoring a text to a specific brand message.",
+                  "Yes, the application is used to detect decision-making patterns or deviations from previous decision-making patterns. Think of an AI system that, after a set of decisions has been made, analyzes patterns in decision-making so that human decision-makers can learn from them.",
+                  "Yes, the application is used in a preparatory step, without influencing the outcome. Think of smart solutions for file management, including functions such as indexing, searching, text and speech processing, or linking data to other data sources, or AI systems used for translating source documents.",
+                  "No"
+                ]
+                }
+              },
+              "required": ["6.2"]
+              }
+            ]
+            },
+            "6.2": {
+            "oneOf": [
+              {
+              "properties": {
+                "6.2": {
+                "enum": [ 
+                  "Yes, the application is used for a limited procedural task. Think of an AI system that converts unstructured data into structured data, an AI system that classifies incoming documents into categories, or an AI system used to detect duplicates within a large number of applications.",
+                  "Yes, the application is used to improve the result of a previously human-performed activity. Think of an AI system that improves the language of previously drafted documents, for example, regarding professional tone or academic style, or by tailoring a text to a specific brand message.",
+                  "Yes, the application is used to detect decision-making patterns or deviations from previous decision-making patterns. Think of an AI system that, after a set of decisions has been made, analyzes patterns in decision-making so that human decision-makers can learn from them.",
+                  "Yes, the application is used in a preparatory step, without influencing the outcome. Think of smart solutions for file management, including functions such as indexing, searching, text and speech processing, or linking data to other data sources, or AI systems used for translating source documents." 
+                ]
+                },
+                "output": { "$ref": "#/definitions/outputHighExcept" }
+              }
+              },
+              {
+              "properties": {
+                "6.2": {
+                "enum": ["No"]
+                },
+                "output": { "$ref": "#/definitions/outputHigh" }
+              },
+              "required": ["2.6"]
+              }
+            ]
+            }
+          }
+          },
+          "exceptionForbidden": {
+          "title": "exceptionForbidden",
+          "type": "object",
+          "properties": {  
+            "2.6": {
+            "type": "string",
+            "title": "Is this application only used for scientific research and scientific development?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["2.6"],
+          "dependencies": {
+            "2.6": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.6": {
+                "enum": [ "Yes" ]
+                },
+                "2.6-yes": {
+                "type": "string",
+                "title": "Provide a brief description of the research. Include in this description at least the purpose of the research, the department within which this research is conducted, and the involved research institutes and/or other partners.",
+                "default": ""
+                },
+                "output": { "$ref": "#/definitions/outputForbiddenExcept" }
+              },
+              "required": ["2.6-yes"]
+              },
+              {
+              "properties": {
+                "2.6": {
+                "enum": ["No"]
+                },
+                "2.3.1": {
+                "type": "string",
+                "title": "Is the application only used for defense or military purposes?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["2.3.1"]
+              }
+            ]
+            },
+            "2.3.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.3.1": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/outputForbiddenExcept" }
+              }
+              },
+              {
+              "properties": {
+                "2.3.1": {
+                "enum": ["No"]
+                },
+                "2.3.2": {
+                "type": "string",
+                "title": "Is the application only used for national security purposes?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["2.3.2"]
+              }
+            ]
+            },
+            "2.3.2": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.3.2": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/outputForbiddenExcept" }
+              }
+              },
+              {
+              "properties": {
+                "2.3.2": {
+                "enum": ["No"]
+                },
+                "2.10": {
+                "type": "string",
+                "title": "Is the application only used for personal non-professional activities?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["2.10"]
+              }
+            ]
+            },
+            "2.10": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.10": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/outputForbiddenExcept" }
+              }
+              },
+              {
+              "properties": {
+                "2.10": {
+                "enum": ["No"]
+                },
+                "output": { "$ref": "#/definitions/outputForbidden" }
+              }
+              }
+            ]
+            }
+          }
+          },
+          "exceptionTransparency": {
+          "title": "exceptionTransparency",
+          "type": "object",
+          "properties": {  
+            "2.6": {
+            "type": "string",
+            "title": "Is this application only used for scientific research and scientific development?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["2.6"],
+          "dependencies": {
+            "2.6": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.6": {
+                "enum": [ "Yes" ]
+                },
+                "2.6-yes": {
+                "type": "string",
+                "title": "Provide a brief description of the research. Include in this description at least the purpose of the research, the department within which this research is conducted, and the involved research institutes and/or other partners.",
+                "default": ""
+                },
+                "output": { "$ref": "#/definitions/outputTransparencyExcept" }
+              },
+              "required": ["2.6-yes"]
+              },
+              {
+              "properties": {
+                "2.6": {
+                "enum": ["No"]
+                },
+                "2.3.1": {
+                "type": "string",
+                "title": "Is the application only used for defense or military purposes?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["2.3.1"]
+              }
+            ]
+            },
+            "2.3.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.3.1": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/outputTransparencyExcept" }
+              }
+              },
+              {
+              "properties": {
+                "2.3.1": {
+                "enum": ["No"]
+                },
+                "2.3.2": {
+                "type": "string",
+                "title": "Is the application only used for national security purposes?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["2.3.2"]
+              }
+            ]
+            },
+            "2.3.2": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.3.2": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/outputTransparencyExcept" }
+              }
+              },
+              {
+              "properties": {
+                "2.3.2": {
+                "enum": ["No"]
+                },
+                "2.10": {
+                "type": "string",
+                "title": "Is the application only used for personal non-professional activities?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["2.10"]
+              }
+            ]
+            },
+            "2.10": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.10": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/outputTransparencyExcept" }
+              }
+              },
+              {
+              "properties": {
+                "2.10": {
+                "enum": ["No"]
+                },
+                "output": { "$ref": "#/definitions/outputTransparency" }
+              }
+              }
+            ]
+            }
+          }
+          }, 
+          "exceptionGPAI": {
+          "title": "exceptionGPAI",
+          "type": "object",
+          "properties": {  
+            "2.6": {
+            "type": "string",
+            "title": "Is this application only used for scientific research and scientific development?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["2.6"],
+          "dependencies": {
+            "2.6": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.6": {
+                "enum": [ "Yes" ]
+                },
+                "2.6-yes": {
+                "type": "string",
+                "title": "Provide a brief description of the research. Include in this description at least the purpose of the research, the department within which this research is conducted, and the involved research institutes and/or other partners.",
+                "default": ""
+                },
+                "output": { "$ref": "#/definitions/outputGPAIExcept" }
+              },
+              "required": ["2.6-yes"]
+              },
+              {
+              "properties": {
+                "2.6": {
+                "enum": ["No"]
+                },
+                "2.3.1": {
+                "type": "string",
+                "title": "Is the application only used for defense or military purposes?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["2.3.1"]
+              }
+            ]
+            },
+            "2.3.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.3.1": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/outputGPAIExcept" }
+              }
+              },
+              {
+              "properties": {
+                "2.3.1": {
+                "enum": ["No"]
+                },
+                "2.3.2": {
+                "type": "string",
+                "title": "Is the application only used for national security purposes?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["2.3.2"]
+              }
+            ]
+            },
+            "2.3.2": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.3.2": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/outputGPAIExcept" }
+              }
+              },
+              {
+              "properties": {
+                "2.3.2": {
+                "enum": ["No"]
+                },
+                "2.10": {
+                "type": "string",
+                "title": "Is the application only used for personal non-professional activities?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["2.10"]
+              }
+            ]
+            },
+            "2.10": {
+            "oneOf": [
+              {
+              "properties": {
+                "2.10": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/outputGPAIExcept" }
+              }
+              },
+              {
+              "properties": {
+                "2.10": {
+                "enum": ["No"]
+                },
+                "output": { "$ref": "#/definitions/outputGPAI" }
+              }
+              }
+            ]
+            }
+          }
+          },      
+          "other": {
+          "title": "other",
+          "type": "object",
+          "properties": {  
+            "50.1": {
+            "type": "string",
+            "title": "Is the application a chatbot, AI assistant, or other system with which the user can have a conversation?",
+            "enum": [
+              "Yes",
+              "No"
+            ]
+            }
+          },
+          "required": ["50.1"],
+          "dependencies": {
+            "50.1": {
+            "oneOf": [
+              {
+              "properties": {
+                "50.1": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/exceptionTransparency" }
+              }
+              },
+              {
+              "properties": {
+                "50.1": {
+                "enum": ["No"]
+                },
+                "50.2": {
+                "type": "string",
+                "title": "Does the application produce text, code, sound, video, or images as a result?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["50.2"]
+              }
+            ]
+            },
+            "50.2": {
+            "oneOf": [
+              {
+              "properties": {
+                "50.2": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/exceptionTransparency" }
+              }
+              },
+              {
+              "properties": {
+                "50.2": {
+                "enum": ["No"]
+                },
+                "3.63": {
+                "type": "string",
+                "title": "Does the application use a general-purpose model, also known as a foundation model or general-purpose AI (GPAI) model?",
+                "enum": [
+                  "Yes",
+                  "No"
+                ]
+                }
+              },
+              "required": ["3.63"]
+              }
+            ]
+            },
+            "3.63": {
+            "oneOf": [
+              {
+              "properties": {
+                "3.63": {
+                "enum": [ "Yes" ]
+                },
+                "output": { "$ref": "#/definitions/exceptionGPAI" }
+              }
+              },
+              {
+              "properties": {
+                "3.63": {
+                "enum": ["No"]
+                },
+                "output":{ "$ref": "#/definitions/outputLow" }
+              }
+              }
+            ]
+            }
+          }
+          }
+        },
+        "properties": {
+          "III.1": {
+          "type": "string",
+          "title": "Does the application use biometric data?",
+          "enum": [
+            "Yes",
+            "No"
+          ]
+          }
+        },
+        "required": ["III.1"],
+        "dependencies": {
+          "III.1": {
+          "oneOf": [
+            {
+            "properties": {
+              "III.1": {
+              "enum": [
+                "Yes"
+              ]
+              },
+              "biometrics": { "$ref": "#/definitions/biometrics" }
+            }
+            },
+            {
+            "properties": {
+              "III.1": {
+              "enum": [
+                "No"
+              ]
+              },
+              "infra": { "$ref": "#/definitions/infra" }
+            }
+            }
+          ]
+          }
+        }
+        },
+  "uiSchema": {
+    "III.1": {
+      "ui:widget": "radio",
+      "ui:description": "Biometric data are unique characteristics of a person such as images or video footage of faces, iris scans, fingerprints, voice sounds, handwriting, and other unique characteristics of bodies and/or behavior. \n\nTyped text is not biometric data, but someone's unique way of typing (keystrokes) is."
+    },
+    "5.e.1": {
+      "ui:widget": "radio"
+    },
+    "5.e.2": {
+      "ui:widget": "radio"
+    },
+    "III.1.1": {
+      "ui:widget": "radio"
+    },
+    "III.1.2": {
+      "ui:widget": "radio",
+      "ui:description": "For example, your phone checks if your face matches what is stored to unlock it. Or at the border, a camera checks if your face matches the photo in your passport.\nThis is about one-on-one verification of a person, with active involvement of that person."
+    },
+    "5.h.1": {
+      "ui:widget": "radio"
+    },
+    "5.g.1": {
+      "ui:widget": "radio"
+    },
+    "5.f.1": {
+      "ui:widget": "radio",
+      "ui:description": "The work environment also includes recruitment and selection, and the home work environment. Education also includes admission to education and online education."
+    },
+    "III.1.3": {
+      "ui:widget": "radio",
+      "ui:description": "Think of services such as BaaS (Blurring as a Service), where facial recognition is used to blur faces in images, or access to a secure computer server with fingerprints."
+    },
+    "III.2.1": {
+      "ui:widget": "radio"
+    },
+    "III.2.2": {
+      "ui:widget": "radio"
+    },
+    "III.2.3": {
+      "ui:widget": "radio",
+      "ui:enableMarkdownInDescription": true,
+      "ui:description": "Critical **digital** infrastructure includes, among other things, internet nodes, DNS services, top-level domain name registration, cloud computing services, data center services, public electronic communication networks, and electronic communication services."
+    },
+    "III.2.4": {
+      "ui:widget": "radio",
+      "ui:description": "A component with a safety function is intended to eliminate or reduce a risk.\n\nExamples of components with a safety function are:\n- A system that automatically closes a lane for a tunnel during road congestion to prevent traffic jams in the tunnel\n- Fire alarm systems\n- Other detection or alarm functions that respond to over/under pressure, temperature, or voltage\n- Collision avoidance systems in vehicles that automatically brake to prevent a collision\n- Firewall or antivirus software\n\nIf the failure or malfunction of the application endangers the health and safety of people or property, choose yes."
+    },
+    "III.2.5": {
+      "ui:widget": "radio",
+      "ui:description": "Think of a firewall or antivirus software."
+    },
+    "III.3": {
+      "ui:widget": "radio",
+      "ui:description": "Think of placement and admission, evaluation and testing, but also control such as plagiarism detection and anti-cheating software.\n\nChoose 'yes' when you are unsure."
+    },
+    "III.3.1": {
+      "ui:widget": "radio",
+      "ui:description": "Also choose 'yes' when the application is only part of the process for allocation or admission. There does not need to be (fully) automated assessment or decisions.\n\nExamples are:\n- An application that helps determine school eligibility\n- An application that determines the distribution of children between schools."
+    },
+    "III.3.2": {
+      "ui:widget": "radio",
+      "ui:description": "Also choose 'yes' when the application contributes to the assessment. There does not need to be (fully) automated assessment."
+    },
+    "III.3.3": {
+      "ui:widget": "radio",
+      "ui:description": "Examples are:\n- Evaluation of (multiple choice) tests\n- Grading assistance\n- Assessment of learning pace or style\n- Personalization of the curriculum or learning process."
+    },
+    "III.3.4": {
+      "ui:widget": "radio",
+      "ui:description": "Examples are:\n- Plagiarism detection\n- Detection of AI text generation tools\n- Supervision during online testing, such as Proctorio\n- Anti-cheating software for (online) exams."
+    },
+    "III.4": {
+      "ui:widget": "radio",
+      "ui:description": "Examples are:\n- Recording hours, measuring KPIs and performance\n- Task distribution\n- Recruitment and selection\n- Inflow and progression (employment conditions, contractual terms)\n- Outflow (termination of contract)\n\nAlso choose 'yes' when the application broadly falls under the above, even if the application plays a small role in an otherwise manual process."
+    },
+    "III.4.1": {
+      "ui:widget": "radio",
+      "ui:description": "Think of placing targeted job advertisements, analyzing and filtering applications, and assessing candidates."
+    },
+    "III.4.2": {
+      "ui:widget": "radio",
+      "ui:description": "This includes both targeted recruitment and writing targeted job descriptions."
+    },
+    "III.4.3": {
+      "ui:widget": "radio",
+      "ui:description": "Think of (automatically) analyzing and/or filtering CVs, cover letters, or other documentation, application videos, and interviews."
+    },
+    "III.4.4": {
+      "ui:widget": "radio",
+      "ui:description": "Think of aptitude tests, automatic assessment based on video recordings."
+    },
+    "III.4.5": {
+      "ui:widget": "radio"
+    },
+    "III.4.6": {
+      "ui:widget": "radio",
+      "ui:description": "Think of decisions to terminate a contract, but also decisions regarding the terms and duration of the termination."
+    },
+    "III.4.7": {
+      "ui:widget": "radio",
+      "ui:description": "We mean employees in the broadest sense, including employees but also freelancers and employees hired through a third party (temporary, secondment)."
+    },
+    "III.4.8": {
+      "ui:widget": "radio",
+      "ui:description": "Think of administrative processes where hours, productivity, speed, breaks, performance, or behavior are processed.\n\nWe mean employees in the broadest sense, including employees but also freelancers and employees hired through a third party (temporary, secondment)."
+    },
+    "III.4.9": {
+      "ui:widget": "radio",
+      "ui:description": "Think of monitoring productivity or speed or other performance."
+    },
+    "III.5.1": {
+      "ui:widget": "radio",
+      "ui:description": "This includes all processes around benefits or allowances, such as application, administration, execution, enforcement, recovery, and objection. This also includes waiving fines, repayments, or granting a payment arrangement.\n\nAlso choose 'yes' when the application plays a small role in the process."
+    },
+    "III.5.2": {
+      "ui:widget": "radio",
+      "ui:description": "This includes all processes around these benefits or allowances, from application, administration, to execution, enforcement, and recovery.\n\nAlso choose 'yes' when the application plays a small role in the process."
+    },
+    "III.5.3": {
+      "ui:widget": "radio",
+      "ui:description": "This includes all processes around (social) services, such as offering/applying, administration, execution, enforcement, and objection. This includes social services in the broadest sense, such as WMO provisions, shelters (e.g., for domestic violence, homeless shelters, bed-bath-bread), care provisions, debt counseling, or reintegration services.\n\nAlso choose 'yes' when the application plays a small role in the process."
+    },
+    "III.5.4": {
+      "ui:widget": "radio",
+      "ui:description": "Also choose 'yes' if the application is part of a preparatory step for these decisions, such as selection for control."
+    },
+    "III.5.5": {
+      "ui:widget": "radio",
+      "ui:description": "Also choose 'yes' if the application is part of a preparatory step for these decisions, such as selection for control."
+    },
+    "III.5.6": {
+      "ui:widget": "radio",
+      "ui:description": "For example, to determine if someone can get a payment arrangement for paying taxes, a fine, or repaying a benefit."
+    },
+    "III.5.7": {
+      "ui:widget": "radio"
+    },
+    "III.5.8": {
+      "ui:widget": "radio",
+      "ui:description": "Emergency services include police, fire brigade, and ambulance. Also think of situations such as detention by a mayor."
+    },
+    "III.6-5.d": {
+      "ui:widget": "radio",
+      "ui:description": "Also think of (administrative) offenses and fraud risk scores, where an estimate is made of whether someone might commit a criminal offense and an estimate of the likelihood of recidivism."
+    },
+    "III.6a": {
+      "ui:widget": "radio",
+      "ui:description": "Law enforcement includes the prevention, investigation, and prosecution of criminal offenses, the execution of sentences, and the protection of public safety. Think of police, special enforcement officers, and the execution of (community) sentences by probation services. Other agencies, such as Halt and specific (inspection) services, can also engage in law enforcement.\n\nAlso choose 'yes' for organizations and institutions that support law enforcement agencies, such as the NFI, and for activities carried out on behalf of law enforcement agencies."
+    },
+    "III.6b": {
+      "ui:widget": "radio",
+      "ui:description": "Think of:\n- Activities around prevention and public safety, such as during crises and events, tackling undermining, and the work of the Safety and Care Action Center.\n- Services or partners with specific enforcement, investigative, or prosecutorial powers, such as FIOD, social investigation, environmental services, public transport enforcers, and investigation by specific (inspection) services."
+    },
+    "III.6b-yes": {
+      "ui:description": "If it is a partnership, also name the other partners."
+    },
+    "III.6.1": {
+      "ui:widget": "radio"
+    },
+    "III.6.2": {
+      "ui:widget": "radio"
+    },
+    "III.6.3": {
+      "ui:widget": "radio"
+    },
+    "III.6.4": {
+      "ui:widget": "radio",
+      "ui:description": "Think of automatically evaluating professional performance, economic situation, health, personal preferences, interests, reliability, behavior, location, or movements of a person to analyze or predict."
+    },
+    "III.6.5": {
+      "ui:widget": "radio"
+    },
+    "III.7": {
+      "ui:widget": "radio"
+    },
+    "III.7.1": {
+      "ui:widget": "radio"
+    },
+    "III.7.2": {
+      "ui:widget": "radio",
+      "ui:description": "Think of a safety or health risk that a migrant or asylum seeker brings, such as TB screening."
+    },
+    "III.7.3": {
+      "ui:widget": "radio",
+      "ui:description": "Also choose 'yes' when the application is used in assessing the reliability of evidence for applications or complaints."
+    },
+    "III.7.4": {
+      "ui:widget": "radio"
+    },
+    "III.7.5": {
+      "ui:widget": "radio",
+      "ui:description": "Choose 'no' when the application is also used for identification that is broader than just checking a passport or other travel document."
+    },
+    "III.8.1": {
+      "ui:widget": "radio",
+      "ui:description": "Professional matters, in which a judge makes a ruling, fall under the judiciary.\nAlternative dispute resolution includes disciplinary law, ombudsmen, arbitration, and complaints committees such as the Advertising Code Committee, the Council for Journalism, and the National Complaints Committee for Education."
+    },
+    "III.8.2": {
+      "ui:widget": "radio",
+      "ui:description": "Think of anonymizing or pseudonymizing judicial decisions, documents, or data, communication between staff members, and administrative tasks."
+    },
+    "III.8.3": {
+      "ui:widget": "radio"
+    },
+    "III.8.4": {
+      "ui:widget": "radio"
+    },
+    "5.a.1": {
+      "ui:widget": "radio",
+      "ui:description": "For example, by showing an image very briefly that someone cannot consciously perceive. These techniques are called subliminal techniques."
+    },
+    "5.a.2": {
+      "ui:widget": "radio",
+      "ui:description": "Think of applications that influence users to buy products, subscribe to services, or prevent them from filing a complaint while they intended to. Applications that stimulate addiction also fall under this."
+    },
+    "5.a.3": {
+      "ui:widget": "radio",
+      "ui:description": "This concerns the (unintended) effect of the application. This can happen, for example, with AI chatbots that can give advice. Even when there are warnings with the application, the effect can be that people are influenced by the application."
+    },
+    "5.a.4": {
+      "ui:widget": "radio",
+      "ui:description": "Think of an AI health chatbot intended to give tips on a healthy lifestyle and tailored advice for psychological and physical exercises. However, if the chatbot encourages unhealthy habits or dangerous activities (e.g., excessive exercise without rest or drinking water) that they would not have done otherwise, it has negative consequences for the user."
+    },
+    "5.c.1": {
+      "ui:widget": "radio"
+    },
+    "5.c.2": {
+      "ui:widget": "radio",
+      "ui:description": "Examples of social behavior are driving behavior, communication style, breaking (unwritten) rules.\nExamples of personal characteristics are age, height, gender, economic situation, movement patterns, and interests."
+    },
+    "5.c.3": {
+      "ui:widget": "radio",
+      "ui:description": "For example, a low score leads to not getting access to something, having to pay a higher price, being investigated in (fraud) research."
+    },
+    "5.c.4": {
+      "ui:widget": "radio",
+      "ui:description": "Unfavourable treatment in an unrelated context is, for example, a fraud risk score that leads to an investigation, where the fraud risk score is based on characteristics without clear relevance to the assessment of fraud, such as having a partner with a certain nationality, having an internet connection, behavior on social platforms, or performance at work.\nOther examples are not being able to get social housing due to traffic violations or being rejected for a job application because noise complaints were reported at the home address."
+    },
+    "5.c.5": {
+      "ui:widget": "radio",
+      "ui:description": "Disproportionate treatment is, for example, Someone gets a higher fraud risk score and therefore control because municipal taxes were once paid late. Other examples are a student not being admitted to further education because they were once caught cheating in childhood or a child not being eligible for Halt due to a high recidivism risk score because the child has a brother with a criminal record."
+    },
+    "6.1": {
+      "ui:widget": "radio",
+      "ui:description": "Think of automatically evaluating professional performance, economic situation, health, personal preferences, interests, reliability, behavior, location, or movements of a person to analyze or predict."
+    },
+    "6.2": {
+      "ui:widget": "radio",
+      "ui:enableMarkdownInDescription": true,
+      "ui:description": "Think of smart search functions, data linking, automatic transcription or translation, text enhancers, and data visualization.\n\n**Note:** When the application can have a (significant) negative impact on those involved, choose 'no'."
+    },
+    "2.6": {
+      "ui:widget": "radio",
+      "ui:enableMarkdownInDescription": true,
+      "ui:description": "This includes AI systems developed by students as part of their studies or by scientists affiliated with a university. In that case, the research must follow recognized ethical and professional standards for scientific research. For example, all participants must be informed that they are part of scientific research.\n\n**Note:** When the application is tested or used in operational processes or regular business operations, choose 'no'."
+    },
+    "2.3.1": {
+      "ui:widget": "radio",
+      "ui:enableMarkdownInDescription": true,
+      "ui:description": "**Note:** When the application is also used for other activities or purposes, choose 'no'."
+    },
+    "2.3.2": {
+      "ui:widget": "radio",
+      "ui:enableMarkdownInDescription": true,
+      "ui:description": "Think of ChatGPT, telephone AI customer service, and assistance tools such as co-pilot."
+    },
+    "2.10": {
+      "ui:widget": "radio",
+      "ui:enableMarkdownInDescription": true,
+      "ui:description": "National security purposes mean preventing and punishing activities that can seriously destabilize the constitutional, political, economic, or social structures of a country. Think of direct threats to society, the population, or the state itself, such as terrorist activities.\n\n**Note:** When the application is also used for other activities or purposes, such as regular prevention, detection, and investigation of criminal offenses, choose 'no'."
+    },
+    "50.1": {
+      "ui:widget": "radio",
+      "ui:description": "Think of ChatGPT, telephone AI customer service, and assistance tools such as co-pilot."
+    },
+    "50.2": {
+      "ui:widget": "radio",
+      "ui:description": "Examples include smart search engines, systems that create summaries, AI that helps with writing, AI for editing images, creating new images, and deepfakes.\nAlso think of applications that create or edit new text, sound, or videos."
+    },
+    "3.63": {
+      "ui:widget": "radio",
+      "ui:description": "Think of a Large Language Model (LLM) or diffusion (image) models.\nA general-purpose AI model, also known as a 'General Purpose AI' or 'foundation model,' can perform a wide range of different tasks well and can therefore be integrated into various AI systems. GPT3 and GPT4.o are examples of general-purpose models used for applications like ChatGPT, but also for many other more specific applications."
+    }
+
+  }
+}
