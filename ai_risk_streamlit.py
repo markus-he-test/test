@@ -1,61 +1,64 @@
 import streamlit as st
 import json
-from pathlib import Path
 
-# Load the JSON Schema
-@st.cache_data
-def load_schema():
-    with open("riskclassification.json", "r", encoding="utf-8") as f:
-        return json.load(f)
+# Load JSON schema from file
+with open("riskclassification.json", "r", encoding="utf-8") as f:
+    schema = json.load(f)["JSONSchema"]
 
-schema = load_schema()
+# Utility to resolve $ref definitions
+def resolve_ref(ref: str):
+    path = ref.strip("#/").split("/")
+    ref_obj = schema
+    for key in path:
+        ref_obj = ref_obj[key]
+    return ref_obj
 
-# --- Render logic engine (simplified to biometrics section as an example) ---
-# You can expand this part based on your full schema structure.
+# Render a form section recursively
+def render_section(section: dict, responses: dict, prefix=""):
+    properties = section.get("properties", {})
+    required = section.get("required", [])
 
-def render_biometrics_section():
-    st.header("Biometrics")
+    for key, prop in properties.items():
+        full_key = f"{prefix}{key}"
+        title = prop.get("title", key)
+
+        if "enum" in prop:
+            responses[full_key] = st.selectbox(title, prop["enum"], key=full_key)
+        elif prop.get("type") == "string":
+            responses[full_key] = st.text_input(title, key=full_key)
+
+    # Handle dependencies (oneOf logic)
+    deps = section.get("dependencies", {})
+    for dep_key, dep_logic in deps.items():
+        if dep_key in responses:
+            for option in dep_logic.get("oneOf", []):
+                expected_val = option["properties"].get(dep_key, {}).get("enum", [None])[0]
+                if responses[dep_key] == expected_val:
+                    # Check if it has a $ref
+                    for sub_key, sub_prop in option["properties"].items():
+                        if "$ref" in sub_prop:
+                            sub_section = resolve_ref(sub_prop["$ref"])
+                            render_section(sub_section, responses, prefix=f"{sub_key}.")
+                        elif sub_key != dep_key:
+                            # Render direct properties
+                            render_section({"properties": {sub_key: sub_prop}}, responses, prefix=f"{sub_key}.")
+                    break
+
+# Main app logic
+st.title("🧠 AI System Risk Classification (EU AI Act)")
+st.markdown("This tool helps classify the risk level of your AI system based on the EU AI Act. It follows a structured decision tree using your responses.")
+
+section_keys = [k for k in schema["definitions"].keys() if not k.startswith("output")]
+section_choice = st.selectbox("📂 Choose a section to evaluate:", section_keys)
+
+if section_choice:
+    st.header(f"Section: {section_choice}")
     responses = {}
+    section_schema = schema["definitions"][section_choice]
+    render_section(section_schema, responses)
 
-    q1 = st.radio(
-        schema["JSONSchema"]["definitions"]["biometrics"]["properties"]["5.e.1"]["title"],
-        schema["JSONSchema"]["definitions"]["biometrics"]["properties"]["5.e.1"]["enum"]
-    )
-    responses["5.e.1"] = q1
+    st.subheader("Collected Answers")
+    st.json(responses)
 
-    if q1 == "Yes":
-        q2 = st.radio(
-            schema["JSONSchema"]["definitions"]["biometrics"]["dependencies"]["5.e.1"]["oneOf"][1]["properties"]["5.e.2"]["title"],
-            schema["JSONSchema"]["definitions"]["biometrics"]["dependencies"]["5.e.1"]["oneOf"][1]["properties"]["5.e.2"]["enum"]
-        )
-        responses["5.e.2"] = q2
-        if q2 == "Yes":
-            result = schema["JSONSchema"]["definitions"]["outputForbidden"]["default"]
-            st.warning(result)
-        else:
-            st.info("Further biometric use case questions would follow here.")
+    st.info("📝 Note: Risk classification logic output (e.g., `outputHigh`) is defined in your JSON, but applying that logic automatically requires a rules engine. Currently, this app collects structured answers — perfect for legal or compliance expert review.")
 
-    elif q1 == "No":
-        q3 = st.selectbox(
-            schema["JSONSchema"]["definitions"]["biometrics"]["dependencies"]["5.e.1"]["oneOf"][0]["properties"]["III.1.1"]["title"],
-            schema["JSONSchema"]["definitions"]["biometrics"]["dependencies"]["5.e.1"]["oneOf"][0]["properties"]["III.1.1"]["enum"]
-        )
-        responses["III.1.1"] = q3
-        if q3 == "To recognize or infer emotions or intentions...":
-            st.info("This may lead to high-risk classification depending on context.")
-        else:
-            st.success("No high-risk or prohibited use detected in this branch.")
-
-    return responses
-
-# --- Streamlit App ---
-st.title("AI System Risk Classification (EU AI Act)")
-st.markdown("Answer the following questions to assess the risk level of your AI system.")
-
-section = st.selectbox("Choose a section to evaluate:", ["Biometrics"])  # Can add more later
-
-if section == "Biometrics":
-    answers = render_biometrics_section()
-
-st.markdown("---")
-st.markdown("\n**Disclaimer:** This tool provides an indication of risk based on the EU AI Act structure. For legal certainty, consult a qualified professional.")
